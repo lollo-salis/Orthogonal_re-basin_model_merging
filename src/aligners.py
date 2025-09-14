@@ -6,7 +6,6 @@ from scipy.optimize import linear_sum_assignment
 class PermutationAligner:
     """
     Allinea i neuroni di model_b a model_a usando il metodo Git Re-Basin.
-    Questa versione è generale e gestisce architetture sia FC che CNN in modo corretto.
     """
     def __init__(self, model_arch):
         self.model_arch = model_arch
@@ -18,7 +17,7 @@ class PermutationAligner:
         return last_weight_key.split('.')[0]
 
     def align(self, sd_a, sd_b, return_transformations=False):
-        print("Inizio allineamento con Permutazioni (Git Re-Basin)...")
+        print("Starting alignment with Permutations (Git Re-Basin)...")
         aligned_sd_b = deepcopy(sd_b)
         permutations = {}
 
@@ -83,7 +82,7 @@ class PermutationAligner:
                          aligned_sd_b[f"{next_layer_name}.weight"] = W_next_b_comp[:, col_ind]
 
             if not changed and iteration > 0:
-                print(f"Convergenza raggiunta dopo {iteration+1} iterazioni.")
+                print(f"Convergence reached after {iteration+1} iterations.")
                 break
 
         if return_transformations:
@@ -94,7 +93,6 @@ class PermutationAligner:
 class OrthogonalAligner:
     """
     Allinea i neuroni di model_b a model_a usando l'analisi di Procrustes.
-    Questa versione è generale e gestisce architetture sia FC che CNN in modo corretto.
     """
     def __init__(self, model_arch):
         self.model_arch = model_arch
@@ -106,7 +104,7 @@ class OrthogonalAligner:
         return last_weight_key.split('.')[0]
 
     def align(self, sd_a, sd_b, return_transformations=False):
-        print("Inizio allineamento con Matrici Ortogonali (Procrustes)...")
+        print("Starting alignment with Orthogonal Matrices (Procrustes)...")
         aligned_sd_b = deepcopy(sd_b)
         rotations = {}
 
